@@ -1,52 +1,40 @@
 <template>
     <div>
-        <h1>hello from sale page</h1>
 
         <div v-if="loading">Carregando Lista....</div>
 
-        <table v-else>
+        <div class="section" v-else>
 
-            <thead>
 
-                <tr>
+                <div class="card" v-for="instance in listInstance" v-bind:key="instance.id">
+                <div class="topo-card">{{instance.name}}</div>
+                <div class="card-content">
 
-                    <th>Nome do aluno</th>
-                    <th>Nome do curso</th>
-                    <th>Data</th>
-                    <th>valor</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                <tr v-for="sale in listSale" v-bind:key="sale.id">
+              
                 
-                    <td>{{sale.Name}}</td>
-                    <td>{{sale.Name_Product}}</td>
-                    <td>{{sale.Sale_Date}}</td>
-                    <td></td>
-                    <td>{{sale.Total}} </td> 
+                    <h4>ID : {{instance.id}} </h4>
+                    <h4>STATUS : {{instance.status}} </h4>
+                    <h4>MONTIORAMENTO : {{instance.monitor}} </h4>
+                    <h4>IMAGE ID : {{instance.image_id}} </h4> 
+                    <h4>TIPO : {{instance.type}} </h4>
                     
-                </tr> 
+                </div> 
+                </div>
+               
 
                 <button @click="getListSale()"> listar vendas</button>
 
-            </tbody> 
-
-        </table>
+        </div>
 
 
     </div>
 </template>
 
 <script>
-
     export default{
         data(){
             return {
-                listSale: [],
+                listInstance: [],
                 loading:false,
             }
         },
@@ -57,10 +45,10 @@
 
         methods:{
             getListSale(){
-                const api = 'https://dashboardmege.herokuapp.com/api/sales'
+                const api = 'http://localhost:8000/api/instances'
                 this.loading = true 
                 this.axios.get(api).then((response) =>{
-                    this.listSale = response.data
+                    this.listInstance = response.data
                     this.loading = false
                 } )
             }
@@ -73,5 +61,38 @@
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+
+body{
+    background-color:#F5F5FB;
+    font-family: 'Montserrat', sans-serif;
+
+}
+.topo{
+    width: 100%;
+    height: 20px;
+}
+.card{
+    width: 30vw;
+    margin: 20px;
+    border-radius: 20px;
+    background-color: white;
+}
+.section{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.topo-card{
+    background-color: blue;
+    border-radius: 20px 20px 0px 0px;
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+.card-content{
+    padding: 10px 20px;
+}
 
 </style>
+
