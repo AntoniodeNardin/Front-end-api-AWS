@@ -1,13 +1,12 @@
 <script setup>
 import Header from "@/components/Header.vue";
 import Card from "../components/Card.vue";
-import Circle from "../components/Circle.vue";
 </script>
 <template>
   <div>
     <Header />
     <div class="botao">
-      <a href="#" @click="getListSale()">Listar Instâncias</a>
+      <a href="#" @click="getInstances()" >Listar Instâncias</a>
     </div>
 
     <div v-if="loading"><div class="loader"></div></div>
@@ -19,25 +18,31 @@ import Circle from "../components/Circle.vue";
         v-bind:instance="instance"
       >
       </Card>
-    </div>
+       </div>
+<!-- 
+      <div v-for="(instance,index) in ListInstance"
+      v-bind:key="index"
+      
+      >{{instance}} teste</div>
+    -->
   </div>
 </template>
 
 <script>
 export default {
+  name:'Instancias',
   data() {
     return {
       listInstance: [],
       loading: false,
     };
   },
-
-  mounted() {
-    this.getListSale();
+  created() {
+    this.getInstances();
   },
 
   methods: {
-    getListSale() {
+    getInstances() {
       const api = "http://localhost:8000/api/instances";
       this.loading = true;
       this.axios.get(api).then((response) => {
@@ -133,8 +138,6 @@ svg {
     transform: rotate(360deg);
   }
 }
-.switch {
-}
 
 /* Hide default HTML checkbox */
 .switch input {
@@ -190,5 +193,6 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
 </style>
 
